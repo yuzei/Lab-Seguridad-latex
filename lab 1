@@ -1,0 +1,222 @@
+\UseRawInputEncoding
+\documentclass[a4paper,12pt]{article}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=red, citecolor=green]{hyperref}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{verbatim}
+
+\definecolor{graybackground}{rgb}{0.9, 0.9, 0.9} % Define un gris claro (casi blanco)
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{gray!10},
+  frame=single,
+  breaklines=true,
+  columns=fullflexible
+}
+
+% Ajuste de márgenes (opcional)
+\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm}
+
+% Personalización del título
+\makeatletter
+\renewcommand{\maketitle}{
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/header.png} \\[1cm] % Ajusta el tamaño y el espacio debajo del logo
+        {\LARGE \textbf{\@title}} \\[0.5cm] % Título en grande y negrita
+        {\large \@author} \\[0.5cm] % Autor en tamaño grande
+        {\@date}
+    \end{center}
+}
+\makeatother
+
+\title{Seguridad en TI (TICS413)
+\\ Lab n°1
+}
+\author{Matías García
+\\ {matiasgarcia@alumnos.uai.cl}}
+\date{23 de Marzo 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Seguridad en redes}
+\subsection{Los riesgos dentro de la red}
+\noindent En el presente se han conocido demasiados ataques a la seguridad de nuestros equipos a traves de las redes y se usan distintos metodos para conseguirlo. Se pueden segmentar en tres tipos generales de ataques:\\
+\begin{itemize}
+    \item \textbf{Ataques Fisícos:} Relacionados con el acceso directo a la infraestructura (instalación de malware malicioso, corte de cables de red o fibra óptica, robo o manipulación de equipos, acceso no autorizado a una habitacion como los servidores).
+    \item \textbf{Ataques Técnicos:} Uso de vulnerabilidades en protocolos, sistemas o configuraciones (intercepci´on de datos, ataques de disponibilidad[DoS o DDoS], explotación de vulnerabilidades, malware de red, abuso de mala configuración).\\
+    \item \textbf{Ataques de Ingenierían Social:}  Explota el factor humano para obtener acceso a un sistema o red (Phishing [correos falsos], Vishing [llamadas falsas], smishing [sms falsos], Pretexting [cuento del tio], Shoulder surfing [mirar por encima del hombro], Tailgating [forzar la entrada física a un área restringida siguiendo a alguien autorizado])\\
+\end{itemize}
+\noindent Un ataque a la seguridad no solo es 1 de esos 3 tipos, sino que puedes ser una combinación de 2 o de los 3. Por ejemplo el ”\textbf{Man in the Middle}” puede ser unicamente Ing. Social (si es que usa correo, llamada o shoulder surfing) pero se puede combinar con un ataque Tecnico un ejemplo seria:\\
+
+\noindent Clonar la conexión wifi, almacenar toda la informaci´on que vaya por trafico en esa red y usarlo para acciones maliciosas.\\
+
+\noindent Con este ejemplo podemos ver la combinación y ver lo ”facíl” que seria lograr esta combinación\\
+\subsection{The Man in the middle}
+\noindent "The man in the middle” o ”el hombre del medio” es un riesgo de tipo ”intercepción de datos” (en algunos casos puede ser manipulación y/o disponinilidad), ya que el atacante se coloca entre dos puntos de una comunicación para leer, modificar o redirigir la información sin que las partes se den cuenta de estos actos.
+
+\noindent Hay que dejar claro que no todo rastreo corresponde a esta categoria de MITM (Man in the middle), esto solo aplica cuando las acciones del tercero son maliciosas o tu no has dado consentimiento para este rastreo (El caso presentado por Edward Snowden es un ejemplo).\\
+
+\section{Analizadores de protocolos de red - Network Protocol Analyzer (NPA)}
+
+\noindent  Los analizadores son Herramientas que permiten Capturar, inspeccionar y analizar el tráfico que circula por una red en tiempo real o desde archivos previamente guardados. Su función prinicipal es descomponer los paquetes de datos captados que se transmiten entre dispositivos, mostrando de forma detallada la información de cada protocolo utilizado (como puede ser TCP, HTTP, DNS, etc). esto permite a los administradores de red, ingenieros de seguridad y desarrolladores diagnosticar problemas, verificar configuraciones, analizar comportamiento sospechosos o realizar auditorías. Una de las más usada dentro de esta categoría es Wireshark.
+
+\subsection{Wireshark}
+
+\noindent Es una herramienta para NPA, permite inspeccionar cada paquete con detalle, mostrando información sobreprotocolos, direcciones IP, puertos y contenido. Su interfaz gráfica es intuitiva y facilita el filtrado y la b´usqueda de datos relevantes, lo que la convierte en una herramienta útil tanto para profesionales como para estudiantes. Se emplea comúnmente para diagnosticar problemas de red, analizar el funcionamiento de aplicaciones y detectar comportamientos anómalos.
+
+\subsection{Asociación entre seguridad y redes}
+
+\noindent Lo que ocurre con todo lo mencionado es ¿como asocio redes con la seguridad mas haya que coloquen un ”virus” en el router? Para eso se generó esta sección.
+
+\noindent La gente no siempre buscará encontrar tus claves o robar tu cuenta de banco, mcuchas veces lo que van a querer es información simple (que buscas, que ves, que consumes, que lugares visitas, etc), y en parte se puede conseguir esa información por medio de tu trafico en un red privada o publica, ya que en esta red se puede ver tus paquetes (tanto tcp como udp). Y para poder verlos tenemos el Wireshark y asi descubriremos un poco mas de la persona que queremos atacar.
+
+\newpage
+
+\section{Práctico}
+
+\noindent Usa Wireshark y analiza la informacion que ves en pantalla.\\
+
+\noindent ¿Qué tipo de redes puedes detectar? ¿Qué puedes aprender de este NPA?\\
+
+\noindent ¿Puedes decir la diferencia entre UDP y TCP?
+
+\noindent Puedes usar el siguiente comando y explorar a más detalle\\
+
+\begin{lstlisting}
+frame contains "<contenido>"
+\end{lstlisting}
+
+\section{Nmap (Network Mapper)}
+
+\noindent Es una herramienta de código abierto utilizada para exploración de redes y auditorías de seguridad.Su propósito principal es escanear dispositivos conectados a una red con el fin de identificar:
+
+\begin{itemize}
+    
+    \item Host Activos. (Dispositivos encendidos y accesibles)
+    
+    \item Puertos Abiertos en cada host.
+
+    \item Servicios en ejecución y sus versiones
+
+    \item Sistema Operativo de los dispositivos
+    
+\end{itemize}
+
+\noindent Es ampliamente utilizada por administradores de red y profesionales de ciberseguridad para detectar vulnerabilidades, descubrir dispositivos ocultos y mapear la infraestructura de una red.\\
+
+\newpage
+
+\subsection{Usos de Nmap}
+
+\begin{lstlisting}
+nmap <IP>
+\end{lstlisting}
+
+\noindent con este comando escaneas los puertos comunes y te dice cuales estan abiertos\\
+
+\begin{lstlisting}
+nmap <IP>/24
+\end{lstlisting}
+
+\noindent Busca dispositivos dentro del host del 0 al 255\\
+
+\begin{lstlisting}
+nmap 192.168.1.1-100
+\end{lstlisting}
+
+\noindent escanea multiple host (en este caso del 1 al 100)\\
+
+\begin{lstlisting}
+nmap -sS <IP>
+\end{lstlisting}
+
+\noindent escaneo "semi" sigiliso ya que no completa la conexión (no hay handshake) es conocido como TCP SYN
+
+\begin{lstlisting}
+nmap -sT <IP>
+\end{lstlisting}
+
+\noindent escaneo completo vía TCP pero es mas detectable, se conoce como TCP connect
+
+\begin{lstlisting}
+nmap -sU <IP>
+\end{lstlisting}
+
+\noindent escanea los puertos udp (DNS,SNMP entre otros) es mas lento y es conocido como UDP scan
+
+\begin{lstlisting}
+nmap -O <IP>
+\end{lstlisting}
+
+\noindent Para detectar un SO
+
+\begin{lstlisting}
+nmap -sV <IP>
+\end{lstlisting}
+
+\noindent para detectar servicios y versiones
+
+\begin{itemize}
+    
+    \item -A [Modo agresivo, deteccion SO, versiones de servicios, sc]
+
+    \item -p <n° puerto> [para escanear puerto]
+    
+    \item -p- [escanea todos los puertos desponibles]
+
+    \item -Sn [deteccion de host activos]
+    
+\end{itemize}
+
+\newpage
+
+\section{Secure Shell (SSH)}
+
+\noindent Es un protocolo de red que permite el acceso remoto seguro a otro equipo a través de una red. Utiliza cifrada para proteger la confidencialidad e integradad de los datos transmitidos.
+
+\noindent \textbf{¿Qué realiza SSH?}
+
+\begin{itemize}
+    
+    \item Acceder a servidores de forma remota.
+
+    \item Ejecutar comandos en sistemas remotos.
+
+    \item Transferir archivos de manera segura(via scp o sftp).
+
+    \item Crear túneles cifrados para redirigir tráfico de red.
+
+\end{itemize}
+
+\noindent Para poder ingresar vía SSH necesitas conocer el usuario y la contraseña del dispositivo, junto al user y contraseña tambien deberás conocer la IP del dispositivo que quieras ingresar.\\
+
+\begin{lstlisting}
+
+SSH <IP>@<nombre_cuenta>
+
+\end{lstlisting}
+
+\noindent Despues de ingresado el comando te pedirá la contraseña (no te asustes, la contraseña no aparece en pantalla).\\
+
+\noindent Despues de logrado el ingreso desde terminal estarás dentro del otro dispositivo de manera remota.\\
+
+\section{SCP}
+
+\noindent El Secure Copy Protocol (SCP) es una de las maneras más comunes de transferir datos de manera segura entre dos dispositivos dentro de una red, lo unico que se nececsita es conocer el dispositivo al que quieres mandar o extraer data
+
+\begin{lstlisting}
+SCP <IP>@<user>:<direccion donde está el archivo> <donde quieres que vaya dentro de tu dispositivo>
+\end{lstlisting}
+
+\end{document}
