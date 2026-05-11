@@ -1,0 +1,84 @@
+\UseRawInputEncoding
+\documentclass[a4paper,12pt]{article}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=red, citecolor=green]{hyperref}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{verbatim}
+
+\definecolor{graybackground}{rgb}{0.9, 0.9, 0.9} % Define un gris claro (casi blanco)
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{gray!10},
+  frame=single,
+  breaklines=true,
+  columns=fullflexible
+}
+
+% Ajuste de márgenes (opcional)
+\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm}
+
+% Personalización del título
+\makeatletter
+\renewcommand{\maketitle}{
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/header.png} \\[1cm] % Ajusta el tamaño y el espacio debajo del logo
+        {\LARGE \textbf{\@title}} \\[0.5cm] % Título en grande y negrita
+        {\large \@author} \\[0.5cm] % Autor en tamaño grande
+        {\@date}
+    \end{center}
+}
+\makeatother
+
+\title{Seguridad en TI - TICS413
+\\ CTF N°1}
+\author{ Matías García
+\\ {}}
+\date{27 de abril del 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{CTF}
+
+\noindent Un CTF (Capture The Flag) en terminos relacionados al laboratorio es una evaluación  práctica. Su objetivo será analizar .pcap, descubrir credenciales, conectarte a un servidor remoto, generar documentos y responder un cuestionario. Para obtener Tres banderas.\\
+
+\noindent \textbf{Debes entregar las banderas obtenidas, asi que anotalas!}
+
+\section*{Evaluación}
+\subsection*{Wireshark}
+
+\noindent Hay tres archivos .pcap que debes analizar y encontrar:\\
+\\
+- Usuario\\
+- Contraseña\\
+- Una bandera (la tuya está asignada a tu numero)
+
+\subsection*{NMap}
+
+\noindent Con las credenciales obtenidas en la parte anterior, ahora necesitas identificar el servidor
+objetivo. Tu objetivo es identificar cual es la IP que contenga SSH y FTP habilitado.\\
+\textbf{Aquí no encontraras un segti pero si podras saber como avanzar y encontrar la IP}
+
+\subsection*{SSH}
+
+\noindent Ya obtenidos la ip y las credenciales deberas entrar via SSH a la ip y encontrar la segti
+
+\subsection*{SCP}
+
+\noindent Ya dentro de la pc deberas descargar una carpeta con un numero que tienes asignado. Dentro encontraras un txt en cual estara tu segti\\
+Despues deberas responder unas preguntas y subir los segti junto a las respuestas escogidas al pc haciendo un scp inverso\\
+
+\textbf{Mucha Suerte! C:}
+
+\end{document}
