@@ -1,0 +1,269 @@
+\UseRawInputEncoding
+\documentclass[a4paper,12pt]{article}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=red, citecolor=green]{hyperref}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{verbatim}
+
+\definecolor{graybackground}{rgb}{0.9, 0.9, 0.9} % Define un gris claro (casi blanco)
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{gray!10},
+  frame=single,
+  breaklines=true,
+  columns=fullflexible
+}
+
+% Ajuste de márgenes (opcional)
+\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm}
+
+% Personalización del título
+\makeatletter
+\renewcommand{\maketitle}{
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/header.png} \\[1cm] % Ajusta el tamaño y el espacio debajo del logo
+        {\LARGE \textbf{\@title}} \\[0.5cm] % Título en grande y negrita
+        {\large \@author} \\[0.5cm] % Autor en tamaño grande
+        {\@date}
+    \end{center}
+}
+\makeatother
+
+\title{Seguridad en TI (TICS413)
+\\ Lab n°5
+}
+\author{Matías García
+\\ {matiasgarcia@alumnos.uai.cl}}
+\date{11 de mayo 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Conceptos Básicos de Ciberseguridad}
+
+\subsection{Confidencialidad, Integridad y Disponibilidad}
+
+La seguridad informática suele basarse en tres pilares fundamentales (C.I.A):
+
+\begin{itemize}
+    \item \textbf{Confidencialidad:} proteger la información frente a accesos no autorizados.
+    \item \textbf{Integridad:} asegurar que los datos no sean modificados indebidamente.
+    \item \textbf{Disponibilidad/accesibilidad:} garantizar que los sistemas estén accesibles cuando se necesiten.
+\end{itemize}
+
+\subsection{Vulnerabilidades}
+
+Una vulnerabilidad es una debilidad en un sistema que puede ser explotada para comprometer su seguridad.
+
+Ejemplos:
+\begin{itemize}
+    \item Validación incorrecta de entradas.
+    \item Contraseñas débiles.
+    \item Configuraciones inseguras.
+\end{itemize}\section{Conceptos Básicos de Ciberseguridad}
+
+\subsection{Confidencialidad, Integridad y Disponibilidad}
+
+La seguridad informática suele basarse en tres pilares fundamentales:
+
+\begin{itemize}
+    \item \textbf{Confidencialidad:} proteger la información frente a accesos no autorizados.
+    \item \textbf{Integridad:} asegurar que los datos no sean modificados indebidamente.
+    \item \textbf{Disponibilidad:} garantizar que los sistemas estén accesibles cuando se necesiten.
+\end{itemize}
+
+\subsection{Vulnerabilidades}
+
+Una vulnerabilidad es una debilidad en un sistema que puede ser explotada para comprometer su seguridad.
+
+Ejemplos:
+\begin{itemize}
+    \item Validación incorrecta de entradas.
+    \item Contraseñas débiles.
+    \item Configuraciones inseguras.
+\end{itemize}
+
+\section{Cross Site Scripting (XSS)}
+
+\subsection{Definición}
+
+XSS (Cross Site Scripting) es una vulnerabilidad web que permite ejecutar código JavaScript malicioso en el navegador de otros usuarios.
+
+\subsection{Tipos de XSS}
+
+\begin{itemize}
+    \item \textbf{Stored XSS:} el payload queda almacenado en el servidor.
+    \item \textbf{Reflected XSS:} el payload se refleja inmediatamente en la respuesta.
+    \item \textbf{DOM-based XSS:} ocurre mediante manipulación del DOM en el navegador.
+\end{itemize}
+
+\subsection{Ejemplo básico}
+
+\begin{lstlisting}[language=HTML]
+<script>alert("XSS");</script>
+\end{lstlisting}
+
+\subsection{Impacto}
+
+\begin{itemize}
+    \item Robo de cookies.
+    \item Suplantación de sesiones.
+    \item Redirecciones maliciosas.
+\end{itemize}
+
+\subsection{Mitigaciones}
+
+\begin{itemize}
+    \item Sanitización de entradas.
+    \item Escape de caracteres.
+    \item Uso de Content Security Policy (CSP).
+\end{itemize}
+
+\section{SQL Injection}
+
+\subsection{Definición}
+
+SQL Injection es una técnica que aprovecha validaciones incorrectas para alterar consultas SQL ejecutadas por una aplicación.
+
+\subsection{Ejemplo conceptual}
+
+Consulta vulnerable:
+
+\begin{lstlisting}[language=SQL]
+SELECT * FROM usuarios
+WHERE usuario = 'admin'
+AND password = '1234';
+\end{lstlisting}
+
+Entrada manipulada:
+
+\begin{lstlisting}
+' OR '1'='1
+\end{lstlisting}
+
+\subsection{Consecuencias}
+
+\begin{itemize}
+    \item Acceso no autorizado.
+    \item Filtración de bases de datos.
+    \item Modificación o eliminación de información.
+\end{itemize}
+
+\subsection{Mitigaciones}
+
+\begin{itemize}
+    \item Prepared Statements.
+    \item ORM seguros.
+    \item Validación de entradas.
+    \item Principio de mínimo privilegio.
+\end{itemize}
+
+\section{OpenSSL}
+
+\subsection{¿Qué es OpenSSL?}
+
+OpenSSL es una biblioteca y conjunto de herramientas utilizadas para implementar protocolos criptográficos como SSL y TLS.
+
+Permite:
+\begin{itemize}
+    \item Generar certificados.
+    \item Crear llaves RSA.
+    \item Firmar certificados.
+    \item Verificar conexiones TLS.
+\end{itemize}
+
+\subsection{Generación de una llave RSA}
+
+\begin{lstlisting}[language=bash]
+openssl genrsa -out privada.key 2048
+\end{lstlisting}
+
+\subsection{Generación de un certificado autofirmado}
+
+\begin{lstlisting}[language=bash]
+openssl req -new -x509 -key privada.key -out cert.pem
+\end{lstlisting}
+
+\subsection{Importancia en ciberseguridad}
+
+OpenSSL es ampliamente utilizado para:
+\begin{itemize}
+    \item HTTPS
+    \item VPN
+    \item Cifrado de comunicaciones
+    \item Infraestructura PKI
+\end{itemize}
+
+\section{John the Ripper}
+
+\subsection{¿Qué es?}
+
+John the Ripper es una herramienta utilizada para auditoría de contraseñas y evaluación de seguridad.
+
+Se utiliza principalmente para:
+\begin{itemize}
+    \item Detectar contraseñas débiles.
+    \item Evaluar políticas de autenticación.
+    \item Realizar pruebas en laboratorios controlados.
+\end{itemize}
+
+\subsection{Funcionamiento}
+
+La herramienta compara hashes contra diccionarios o combinaciones generadas automáticamente.
+
+\subsection{Ejemplo básico}
+
+\begin{lstlisting}[language=bash]
+john hashes.txt
+\end{lstlisting}
+
+Uso de diccionario:
+
+\begin{lstlisting}[language=bash]
+john --wordlist=rockyou.txt hashes.txt
+\end{lstlisting}
+
+\subsection{Mitigaciones frente a ataques de fuerza bruta}
+
+\begin{itemize}
+    \item Contraseñas robustas.
+    \item MFA (autenticación multifactor).
+    \item Hashes seguros como bcrypt o Argon2.
+\end{itemize}
+
+\section{Buenas Prácticas de Seguridad}
+
+\begin{itemize}
+    \item Mantener sistemas actualizados.
+    \item Utilizar autenticación multifactor.
+    \item Validar entradas del usuario.
+    \item Aplicar principios de mínimo privilegio.
+    \item Realizar auditorías periódicas.
+\end{itemize}
+
+\begin{thebibliography}{9}
+\bibitem{owasp}
+OWASP Foundation.
+\textit{OWASP Top 10 Web Application Security Risks}.
+
+\bibitem{openssl}
+OpenSSL Documentation.
+\url{https://www.openssl.org/docs/}
+
+\bibitem{john}
+John the Ripper Documentation.
+\url{https://www.openwall.com/john/}
+
+\end{thebibliography}
+
+
+\end{document}
