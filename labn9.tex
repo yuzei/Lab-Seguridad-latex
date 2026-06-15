@@ -1,0 +1,106 @@
+\UseRawInputEncoding
+\documentclass[a4paper,12pt]{article}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=red, citecolor=green]{hyperref}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{verbatim}
+
+\definecolor{graybackground}{rgb}{0.9, 0.9, 0.9} % Define un gris claro (casi blanco)
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{gray!10},
+  frame=single,
+  breaklines=true,
+  columns=fullflexible
+}
+
+% Ajuste de márgenes (opcional)
+\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm}
+
+% Personalización del título
+\makeatletter
+\renewcommand{\maketitle}{
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{img/header.png} \\[1cm] % Ajusta el tamaño y el espacio debajo del logo
+        {\LARGE \textbf{\@title}} \\[0.5cm] % Título en grande y negrita
+        {\large \@author} \\[0.5cm] % Autor en tamaño grande
+        {\@date}
+    \end{center}
+}
+\makeatother
+
+\title{Seguridad en TI (TICS413)
+\\ Lab n°9
+}
+\author{Matías García
+\\ {matiasgarcia@alumnos.uai.cl}}
+\date{15 de junio 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{SQL Injection}
+\subsection*{Breve Historia}
+\noindent SQL (Structured Query Language) es el lenguaje estándar para gestionar y consultar bases de datos relacionales.
+\\Permite crear, modificar y eliminar estructuras de datos como tablas, índices y esquemas.
+\\Con comandos como SELECT, INSERT, UPDATE y DELETE se recuperan y manipulan los registros.
+\\Es un lenguaje declarativo: describes qué datos quieres y el motor de la base de datos decide cómo obtenerlos.
+\\Se utiliza en aplicaciones web, sistemas empresariales y cualquier servicio que necesite almacenar datos estructurados.
+\\Buenas prácticas incluyen consultas parametrizadas, control de permisos y copias de seguridad para proteger integridad y confidencialidad.
+
+
+
+\section*{¿Qué es SQL Injection?}
+
+\noindent SQL Injection es una vulnerabilidad de entrada donde datos no confiables controlados por un atacante se interpretan como parte de la sentencia SQL, permitiendo alterar la lógica de consultas contra la base de datos.
+Fases del ataque: reconocimiento (identificar parámetros vulnerables), inyección (inyectar payloads para manipular la consulta), exfiltración o modificación (leer/alterar registros), y finalmente cobertura (borrar logs o crear backdoors si hay privilegios).
+\\ \textbf{Impacto potencial}: desde bypass de autenticación y exfiltración masiva de datos hasta
+corrupción de datos, ejecución de comandos del sistema (si DB lo permite) y escalada de
+privilegios.
+\\ \textbf{Mitigaciones técnicas (prioritarias)}: consultas parametrizadas/prepared statements,
+uso correcto de ORM sin raw SQL, hashing de contraseñas, principle of least privilege
+en cuentas DB, validación de entrada por tipo/longitud y evitar mostrar errores DB al
+usuario.
+\\ \textbf{Controles adicionales}: WAF con reglas específicas, monitoreo/alertas sobre queries anómalas, escaneo automatizado en entornos de prueba (sólo para auditoría), y revisiones de
+código centradas en puntos donde se construye SQL dinámico.
+
+\\ \textbf{Práctica segura en desarrollo}: pruebas unitarias que validen sanitización y uso de parámetros, CI/CD que incluya SAST y dependabot, y entrenar a desarrolladores sobre patrones inseguros (concatenación de strings en SQL)
+
+\section*{Tipos de inyecciones}
+
+\begin{itemize}
+    \item \textbf{Autenticación}: El atacante intenta que la consulta de validación siempre sea verdadera.
+    \begin{lstlisting}
+SELECT * FROM users WHERE username = ’entrada_usuario’ AND password = ’
+entrada_password’;
+    \end{lstlisting}
+    \\Si la aplicación concatena texto sin verificar, puede recibir una entrada que modifique la lógica (’1’=’1’).
+    
+    \item \textbf{Resultado}: el servidor interpreta la condición como siempre verdadera y permite acceso sin credenciales válidas.
+
+    \item \textbf{Defensa}: usar consultas parametrizadas (prepared statements), que separan datos de código
+
+    \item \textbf{Enumeración}: Algunas variantes intentan unir datos de otras tablas usando operadores como UNION. Propósito: aprender la estructura interna de la base de datos (tablas, columnas).
+    \\Ejemplo conceptual (sin payload):
+    \begin{lstlisting}
+SELECT columna1, columna2 FROM usuarios WHERE id = X UNION SELECT otras_columnas FROM otra_tabla;
+    \end{lstlisting}
+
+    \item \textbf{Defensa}: restringir privilegios de la cuenta de aplicación y desactivar mensajes de error detallados.
+
+
+    \item \textbf{Blind}: Cuando la aplicación no devuelve mensajes de error, el atacante infiera datos por comportamiento
+    
+    \item \textbf{Ejemplo conceptual}: Una consulta que hace que el servidor espere cierto tiempo si una condición es verdadera (SLEEP() o WAITFOR DELAY)
+\end{itemize}
+
+\end{document}
